@@ -2,31 +2,18 @@ require('dotenv').config()
 const express = require('express')
 const http = require('http')
 const path = require('path')
-const cors = require('cors')
 const { Server } = require("socket.io")
 const app = express()
 const server = http.createServer(app)
-const io = new Server(server, {
-    serveClient: false,
-    cors: {
-        origin: '*',
-        methods: ['get', 'post']
-    }
-})
-const deregisterStream = (socket) => {
-    const index = streams.indexOf(socket.id)
-    if (index >= 0) {
-        streams.splice(index, 1)
-    }
-}
-let streams = []
+const io = new Server(server)
+
+let streamSockets = new Set()
 
 app.use(express.static('public'))
 app.use(express.json())
-app.use(cors())
 
 app.get('/api/streams', (req, res) => {
-    res.json({streams: streams})
+    res.json(Array.from(streamSockets))
 })
 
 app.get('/*', (req, res) => {
@@ -34,31 +21,26 @@ app.get('/*', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-    console.log(`new connection: ${socket.id}`)
     socket.on('disconnect', () => {
-        console.log(`disconnected: ${socket.id}`)
-        deregisterStream(socket)
+        streamSockets.delete(socket.id)
     })
-    socket.on('joinStream', (streamId) => {
-        const index = streams.indexOf(streamId)
-        if (index >= 0) {
-            socket.join(streamId)
+    socket.on('joinStream', (streamSocket, userId) => {
+        if (socket.id !== streamSocket) {
+            socket.join(streamSocket)
         }
+        socket.to(streamSocket).emit('viewerJoining', userId)
     })
-    socket.on('leaveStream', (streamId) => {
-        socket.leave(streamId)
+    socket.on('leaveStream', (streamSocket, userId) => {
+        socket.to(streamSocket).emit('viewerLeaving', userId)
+        if (socket.id !== streamSocket) {
+            socket.leave(streamSocket)
+        }
     })
     socket.on('registerStream', () => {
-        const index = streams.indexOf(socket.id)
-        if (index < 0) {
-            streams.push(socket.id)
-        }
+        streamSockets.add(socket.id)
     })
     socket.on('deregisterStream', () => {
-        deregisterStream(socket)
-    })
-    socket.on('stream', (data) => {
-        socket.to(socket.id).emit('streamData', data)
+        streamSockets.delete(socket.id)
     })
 })
 
