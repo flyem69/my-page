@@ -1,16 +1,29 @@
 require('dotenv').config()
 const express = require('express')
-const http = require('http')
+const https = require('https')
+const fs = require('fs')
 const path = require('path')
 const { Server } = require("socket.io")
+const { ExpressPeerServer } = require('peer')
 const app = express()
-const server = http.createServer(app)
+const server = https.createServer({
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+}, app)
 const io = new Server(server)
+const peerServer = ExpressPeerServer(server, {
+    port: process.env.PORT,
+    ssl: {
+        key: fs.readFileSync('key.pem'),
+        cert: fs.readFileSync('cert.pem')
+    }
+})
 
 let streamSockets = new Set()
 
 app.use(express.static('public'))
 app.use(express.json())
+app.use('/peer', peerServer)
 
 app.get('/api/streams', (req, res) => {
     res.json(Array.from(streamSockets))
