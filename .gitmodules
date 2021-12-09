@@ -1,0 +1,3 @@
+[submodule "my-page-react"]
+	path = my-page-react
+	url = https://github.com/krisMONSTER/my-page-react.git
