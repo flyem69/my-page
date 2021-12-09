@@ -1,4 +1,4 @@
-require('dotenv').config()
+const config = require('./config.js')
 const express = require('express')
 const https = require('https')
 const fs = require('fs')
@@ -10,9 +10,12 @@ const server = https.createServer({
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem')
 }, app)
-const io = new Server(server)
+const io = new Server(server, {
+    path: '/socket'
+})
 const peerServer = ExpressPeerServer(server, {
-    port: process.env.PORT,
+    path: '/peer',
+    port: config.port,
     ssl: {
         key: fs.readFileSync('key.pem'),
         cert: fs.readFileSync('cert.pem')
@@ -23,7 +26,7 @@ let streamSockets = new Set()
 
 app.use(express.static('public'))
 app.use(express.json())
-app.use('/peer', peerServer)
+app.use(peerServer)
 
 app.get('/api/streams', (req, res) => {
     res.json(Array.from(streamSockets))
@@ -57,6 +60,6 @@ io.on('connection', (socket) => {
     })
 })
 
-server.listen(process.env.PORT, () => {
-    console.log(`listening on ${process.env.PORT}`)
+server.listen(config.port, () => {
+    console.log(`listening on ${config.port}`)
 })
