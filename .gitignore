@@ -1,6 +1,6 @@
 /public
 /node_modules
 .env
-cert.pem
-csr.pem
-key.pem
+certificate.pem
+private-key.pem
+public-key.pem

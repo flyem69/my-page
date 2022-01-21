@@ -1,5 +1,6 @@
 const config = {
-    port: 443
+    port: 443,
+    apiPort: 8080
 }
 
 module.exports = config
