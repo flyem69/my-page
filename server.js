@@ -7,7 +7,7 @@ const { Server } = require("socket.io")
 const { ExpressPeerServer } = require('peer')
 const app = express()
 const server = https.createServer({
-    key: fs.readFileSync('private-key.pem'),
+    key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('certificate.pem')
 }, app)
 const io = new Server(server, {
@@ -17,7 +17,7 @@ const peerServer = ExpressPeerServer(server, {
     path: '/peer',
     port: config.port,
     ssl: {
-        key: fs.readFileSync('private-key.pem'),
+        key: fs.readFileSync('key.pem'),
         cert: fs.readFileSync('certificate.pem')
     }
 })
