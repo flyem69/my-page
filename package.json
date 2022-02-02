@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd my-page-react && npm install && cross-env BUILD_PATH='../public' react-scripts build",
-    "start": "nodemon server.js"
+    "build": "cd my-page-react && npm install && cross-env BUILD_PATH='../public/content-react' react-scripts build",
+    "start:dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

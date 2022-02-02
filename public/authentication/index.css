@@ -1,0 +1,103 @@
+:root {
+    --weak-dark: rgb(64, 64, 64);
+    --mid-dark: rgb(48, 48, 48);
+    --strong-dark: rgb(32, 32, 32);
+    --weak-light: rgb(160, 160, 160);
+    --mid-light: rgb(184, 184, 184);
+    --strong-light: rgb(208, 208, 208);
+    --red: rgb(200, 0, 0);
+    --strong-dark-filter: invert(13%);
+    --strong-light-filter: invert(82%);
+    --transition: 0.2s;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: var(--strong-light);
+    color: var(--strong-dark);
+}
+
+label {
+    font-size: 17px;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+    align-items: center;
+    width: fit-content;
+    outline: var(--strong-dark) solid 2px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+input[type=text], input[type=password] {
+    width: 250px;
+    padding: 5px;
+    outline: none;
+    border: 2px solid;
+    border-radius: 5px;
+    background-color: transparent;
+    border-color: var(--weak-light);
+    font-size: 15px;
+    transition: border-color var(--transition);
+}
+
+input[type=text]:focus {
+    border-color: var(--strong-dark);
+}
+
+input[type=password]:focus {
+    border-color: var(--strong-dark);
+}
+
+input[type=submit] {
+    display: inline-block;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 5px;
+    color: var(--strong-dark);
+    border-color: var(--strong-light);
+    background-color: transparent;
+    transition: border-color var(--transition);
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+    border-color: var(--strong-dark);
+}
+
+.container {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 200px;
+    row-gap: 50px;
+    height: 100%;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+}
+
+#login-container {
+    flex-direction: row-reverse;
+}
+
+#registration-container {
+    visibility: hidden;
+    flex-direction: row;
+}
+
+.switch-forms {
+    font-size: 40px;
+    align-self: center;
+}
+
+.switch-forms:hover {
+    cursor: pointer;
+}

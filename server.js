@@ -5,38 +5,46 @@ const fs = require('fs')
 const path = require('path')
 const { Server } = require("socket.io")
 const { ExpressPeerServer } = require('peer')
-const app = express()
-const server = https.createServer({
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('certificate.pem')
-}, app)
-const io = new Server(server, {
+const expressApp = express()
+const httpServer = https.createServer({
+    key: fs.readFileSync('ssl/key.pem'),
+    cert: fs.readFileSync('ssl/certificate.pem')
+}, expressApp)
+const socketServer = new Server(httpServer, {
     path: '/socket'
 })
-const peerServer = ExpressPeerServer(server, {
+const peerServer = ExpressPeerServer(httpServer, {
     path: '/peer',
     port: config.port,
     ssl: {
-        key: fs.readFileSync('key.pem'),
-        cert: fs.readFileSync('certificate.pem')
+        key: fs.readFileSync('ssl/key.pem'),
+        cert: fs.readFileSync('ssl/certificate.pem')
     }
 })
 
 let streamSockets = new Set()
 
-app.use(express.static('public'))
-app.use(express.json())
-app.use(peerServer)
+expressApp.use(express.static('public/authentication'))
+expressApp.use(express.static('public/content-react'))
+expressApp.use(express.json())
+expressApp.use(peerServer)
 
-app.get('/api/streams', (req, res) => {
+expressApp.get('/api/streams', (req, res) => {
     res.json(Array.from(streamSockets))
 })
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+expressApp.get('/*', (req, res, next) => {
+    const bearerHeader = req.headers['authorization']
+    if (bearerHeader) {
+        next()
+    } else {
+        res.sendFile(path.join(__dirname, 'public', 'authentication', 'index.html'))
+    }
+}, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'content-react', 'index.html'))
 })
 
-io.on('connection', (socket) => {
+socketServer.on('connection', (socket) => {
     socket.on('disconnect', () => {
         streamSockets.delete(socket.id)
     })
@@ -60,6 +68,6 @@ io.on('connection', (socket) => {
     })
 })
 
-server.listen(config.port, () => {
+httpServer.listen(config.port, () => {
     console.log(`listening on ${config.port}`)
 })
