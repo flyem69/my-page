@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd my-page-react && npm install && cross-env BUILD_PATH='../public/content-react' react-scripts build",
+    "build": "cd my-page-react && npm install && cross-env BUILD_PATH='../static/react-content' react-scripts build",
     "start:dev": "nodemon server.js",
     "start": "node server.js"
   },
@@ -14,9 +14,11 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "peer": "^0.6.1",
     "react-scripts": "^4.0.3",
+    "serve-static": "^1.14.2",
     "socket.io": "^4.4.0"
   },
   "devDependencies": {

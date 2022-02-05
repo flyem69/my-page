@@ -1,10 +1,12 @@
 const config = require('./config.js')
 const express = require('express')
+const serveStatic = require('serve-static')
 const https = require('https')
 const fs = require('fs')
 const path = require('path')
 const { Server } = require("socket.io")
 const { ExpressPeerServer } = require('peer')
+
 const expressApp = express()
 const httpServer = https.createServer({
     key: fs.readFileSync('ssl/key.pem'),
@@ -21,11 +23,12 @@ const peerServer = ExpressPeerServer(httpServer, {
         cert: fs.readFileSync('ssl/certificate.pem')
     }
 })
+const streamSockets = new Set()
 
-let streamSockets = new Set()
+expressApp.set('view engine', 'ejs')
 
-expressApp.use(express.static('public/authentication'))
-expressApp.use(express.static('public/content-react'))
+expressApp.use(serveStatic(__dirname + '/static/react-content', { index: false }))
+//expressApp.use(express.static(__dirname + '/static/react-content'), {index: false})
 expressApp.use(express.json())
 expressApp.use(peerServer)
 
@@ -38,10 +41,10 @@ expressApp.get('/*', (req, res, next) => {
     if (bearerHeader) {
         next()
     } else {
-        res.sendFile(path.join(__dirname, 'public', 'authentication', 'index.html'))
+        res.render('./authentication/index.ejs')
     }
 }, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'content-react', 'index.html'))
+    res.sendFile(__dirname + '/static/react-content/index.html')
 })
 
 socketServer.on('connection', (socket) => {
