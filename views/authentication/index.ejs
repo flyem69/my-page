@@ -111,9 +111,9 @@
 </head>
 <body>
     <div class="container" id="login-container">
-        <form name="sign-in" action="javascript:void(0);" onsubmit="login()">
-            <label for="email-or-name">Email address or username</label>
-            <input type="text" name="email-or-name">
+        <form name="sign-in" action="/login" method="POST">
+            <label for="emailOrName">Email address or username</label>
+            <input type="text" name="emailOrName">
             <label for="password">Password</label>
             <input type="password" name="password">
             <input type="submit" name="submit" value="Sign in">
@@ -121,7 +121,7 @@
         <div class="switch-forms" onclick="switchToRegistration()">No account?</div>
     </div>
     <div class="container" id="registration-container">
-        <form name="sign-up" action="javascript:void(0);" onsubmit="register()" method="post">
+        <form name="sign-up" action="/registration" method="POST">
             <label for="email">Email address</label>
             <input type="text" name="email">
             <label for="name">Username</label>
@@ -149,14 +149,6 @@
         function switchToLogin() {
             registrationContainer.style.visibility = 'hidden'
             loginContainer.style.visibility = 'visible'
-        }
-
-        function login() {
-            console.log('login')
-        }
-
-        function register() {
-            console.log('register')
         }
 
         function checkRepeatedPassword() {
