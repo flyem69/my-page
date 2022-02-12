@@ -53,7 +53,7 @@ expressApp.post('/login', (httpRequest, httpResponse) => {
                         console.log('Something went wrong')
                 }
             } else {
-                console.log('Unable to make request')
+                console.log('Server is not responding')
             }
         })
     httpResponse.render('./authentication/index.ejs', { config: config })
@@ -71,7 +71,7 @@ expressApp.post('/registration', (httpRequest, httpResponse) => {
                     console.log('Something went wrong')
                 }
             } else {
-                console.log('Unable to make request')
+                console.log('Server is not responding')
             }
         })
     httpResponse.render('./authentication/index.ejs', { config: config })

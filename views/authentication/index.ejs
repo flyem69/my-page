@@ -121,15 +121,15 @@
         <div class="switch-forms" onclick="switchToRegistration()">No account?</div>
     </div>
     <div class="container" id="registration-container">
-        <form name="sign-up" action="/registration" method="POST">
+        <form name="sign-up" action="/registration" onsubmit="return isPasswordRepeated()" method="POST">
             <label for="email">Email address</label>
             <input type="text" name="email">
             <label for="name">Username</label>
             <input type="text" name="name">
             <label for="password">Password</label>
-            <input type="password" name="password" oninput="checkRepeatedPassword()">
+            <input type="password" name="password" oninput="validateRepeatedPassword()">
             <label for="repeat-password">Repeat password</label>
-            <input type="password" name="repeat-password" oninput="checkRepeatedPassword()">
+            <input type="password" name="repeat-password" oninput="validateRepeatedPassword()">
             <input type="submit" name="submit" value="Sign up">
         </form>
         <div class="switch-forms" onclick="switchToLogin()">Back to login</div>
@@ -151,11 +151,15 @@
             loginContainer.style.visibility = 'visible'
         }
 
-        function checkRepeatedPassword() {
-            if (registrationForm['password'].value !== registrationForm['repeat-password'].value) {
-                registrationForm['repeat-password'].style.borderColor = computedStyle.getPropertyValue('--red')
-            } else {
+        function isPasswordRepeated() {
+            return registrationForm['password'].value === registrationForm['repeat-password'].value
+        }
+
+        function validateRepeatedPassword() {
+            if (isPasswordRepeated()) {
                 registrationForm['repeat-password'].style.borderColor = null
+            } else {
+                registrationForm['repeat-password'].style.borderColor = computedStyle.getPropertyValue('--red')
             }
         }
     </script>
