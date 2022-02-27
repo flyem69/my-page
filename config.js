@@ -1,6 +1,7 @@
 const config = {
+    root: __dirname,
     port: 443,
-    myPageApiOrigin: 'http://localhost:8080'
+    api: 'http://localhost:8080'
 }
 
 module.exports = config
