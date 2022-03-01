@@ -8,11 +8,8 @@ const router = express.Router()
 router.post('/login', (httpRequest, httpResponse) => {
     restClient.login(httpRequest.body.emailOrName, httpRequest.body.password)
         .then(response => {
-            httpResponse.sendFile(config.root + '/static/react-content/index.html', {
-                headers: {
-                    'set-cookie': 'token=' + response.data
-                }
-            })
+            httpResponse.header('set-cookie', 'token=' + response.data)
+            httpResponse.redirect('/')
         }).catch(error => {
             let message
             if (error.response) {
@@ -33,11 +30,8 @@ router.post('/login', (httpRequest, httpResponse) => {
 router.post('/registration', (httpRequest, httpResponse) => {
     restClient.registration(httpRequest.body.email, httpRequest.body.name, httpRequest.body.password)
         .then(response => {
-            httpResponse.sendFile(config.root + '/static/react-content/index.html', {
-                headers: {
-                    'set-cookie': 'token=' + response.data
-                }
-            })
+            httpResponse.header('set-cookie', 'token=' + response.data)
+            httpResponse.redirect('/')
         }).catch(error => {
             let message
             if (error.response) {
@@ -49,7 +43,6 @@ router.post('/registration', (httpRequest, httpResponse) => {
             } else {
                 message = commonResponses.SERVER_IS_NOT_RESPONDING
             }
-            console.log(message)
             httpResponse.render('authentication', {
                 message: message
             })
