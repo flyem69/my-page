@@ -1,4 +1,3 @@
-const config = require('../../../config')
 const express = require('express')
 const restClient = require('../services/rest')
 const commonResponses = require('../../common/enumeration/responses')
@@ -22,7 +21,7 @@ router.post('/login', (httpRequest, httpResponse) => {
                 message = commonResponses.SERVER_IS_NOT_RESPONDING
             }
             httpResponse.render('authentication', {
-                message: message
+                messages: [ message ]
             })
         })
 })
@@ -44,7 +43,7 @@ router.post('/registration', (httpRequest, httpResponse) => {
                 message = commonResponses.SERVER_IS_NOT_RESPONDING
             }
             httpResponse.render('authentication', {
-                message: message
+                message: [ message ]
             })
         })
 })

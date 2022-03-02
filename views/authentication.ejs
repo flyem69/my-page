@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,7 +40,8 @@
             padding: 20px;
         }
 
-        input[type=text], input[type=password] {
+        input[type=text],
+        input[type=password] {
             width: 250px;
             padding: 5px;
             outline: none;
@@ -107,9 +109,93 @@
         .switch-forms:hover {
             cursor: pointer;
         }
+
+        #message-box {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            top: 10px;
+            gap: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .message {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 5px;
+            background-color: var(--strong-light);
+            border: 2px solid var(--strong-dark);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .message .text {
+            word-break: break-all;
+        }
+
+        .message .close:hover {
+            cursor: pointer;
+        }
+
+        .message .close {
+            width: 20px;
+            height: 20px;
+            position: relative;
+        }
+
+        .message .close:after {
+            content: '';
+            height: 20px;
+            border-left: 2px solid var(--strong-dark);
+            position: absolute;
+            transform: rotate(45deg);
+            left: 9px;
+        }
+
+        .message .close:before {
+            content: '';
+            height: 20px;
+            border-left: 2px solid var(--strong-dark);
+            ;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 9px;
+        }
+
+        @media screen and (max-width: 650px) {
+            #message-box {
+                width: 300px;
+            }
+        }
+
+        @media (min-width: 650px) and (max-width: 900px) {
+            #message-box {
+                width: 550px;
+            }
+        }
+
+        @media screen and (min-width: 900px) {
+            #message-box {
+                width: 800px;
+            }
+        }
     </style>
 </head>
+
 <body>
+    <div id="message-box">
+        <% if (Array.isArray(locals.messages)) { %>
+            <% messages.forEach(function(message) { %> 
+                <div class="message">
+                    <div class="text"><%= message %></div>
+                    <div class="close" onclick="removeMessage(this.parentElement)"></div>
+                </div>
+            <% }) %> 
+        <% } %>
+    </div>
     <div class="container" id="login-container">
         <form name="sign-in" action="/login" method="POST">
             <label for="emailOrName">Email address or username</label>
@@ -162,6 +248,26 @@
                 registrationForm['repeat-password'].style.borderColor = computedStyle.getPropertyValue('--red')
             }
         }
+
+        function removeMessage(message) {
+            message.remove()
+        }
+
+        function addMessage(content) {
+            const messageBox = document.getElementById('message-box')
+            const message = document.createElement('div')
+            const text = document.createElement('div')
+            const close = document.createElement('div')
+            message.className = 'message'
+            text.className = 'text'
+            text.appendChild(document.createTextNode(content))
+            close.className = 'close'
+            close.onclick = function () { removeMessage(message) }
+            message.appendChild(text)
+            message.appendChild(close)
+            messageBox.appendChild(message)
+        }
     </script>
 </body>
+
 </html>
