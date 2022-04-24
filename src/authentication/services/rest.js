@@ -2,7 +2,7 @@ const config = require('../../../config')
 const axios = require('axios')
 
 restClient = {
-    login(emailOrName, password) {
+    login(email, password) {
         return axios({
             method: 'get',
             url: config.api + '/authentication/login',
@@ -11,7 +11,7 @@ restClient = {
                 'Content-type': 'application/json'
             },
             data: {
-                emailOrName: emailOrName,
+                email: email,
                 password: password
             }
         })

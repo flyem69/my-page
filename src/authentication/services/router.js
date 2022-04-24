@@ -5,7 +5,7 @@ const commonResponses = require('../../common/enumeration/responses')
 const router = express.Router()
 
 router.post('/login', (httpRequest, httpResponse) => {
-    restClient.login(httpRequest.body.emailOrName, httpRequest.body.password)
+    restClient.login(httpRequest.body.email, httpRequest.body.password)
         .then(response => {
             httpResponse.header('set-cookie', 'token=' + response.data)
             httpResponse.redirect('/')
