@@ -1,0 +1,11 @@
+<div class="centralized-layout">
+    <div class="menu">
+        <a routerLink="/fuel">
+            <div [ngClass]="['menu-item', 'menu-fuel', appearance$ | async]"></div>
+        </a>
+        <div [ngClass]="['menu-item', 'menu-game', appearance$ | async]"></div>
+        <a routerLink="/streams">
+            <div [ngClass]="['menu-item', 'menu-streaming', appearance$ | async]"></div>
+        </a>
+    </div>
+</div>

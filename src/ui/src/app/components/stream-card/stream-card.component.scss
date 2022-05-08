@@ -1,0 +1,28 @@
+.stream-card {
+    display: grid;
+    grid-template-columns: 200px;
+    grid-template-rows: 150px auto auto;
+    gap: 5px;
+    align-items: center;
+    justify-items: center;
+
+    .stream-preview {
+        max-width: 200px;
+        max-height: 150px;
+        border-radius: 10px;
+    }
+
+    .stream-icon {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+    }
+
+    .stream-id {
+        overflow: hidden;
+    }
+
+    .stream-author {
+        overflow: hidden;
+    }
+}

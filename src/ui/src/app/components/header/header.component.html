@@ -1,0 +1,8 @@
+<div [ngClass]="['header', appearance$ | async]">
+    <a class="header-home" routerLink="/">
+        <div [ngClass]="['header-home-icon', appearance$ | async]"></div>
+    </a>
+    <div class="header-toolbar" #toolbar>
+        <app-switch [subject]="darkMode$"></app-switch>
+    </div>
+</div>

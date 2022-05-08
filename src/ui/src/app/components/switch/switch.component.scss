@@ -1,0 +1,43 @@
+.switch {
+    position: relative;
+    height: 30px;
+    width: 60px;
+    margin: 2px;
+    outline: 2px solid;
+    border-radius: 50% / 100%;
+    cursor: pointer;
+    transition: var(--transition);
+
+    &.light {
+        outline-color: var(--strong-dark);
+    }
+
+    &.dark {
+        outline-color: var(--strong-light);
+    }
+}
+
+.switch-thumb {
+    position: absolute;
+    height: 100%; 
+    width: 50%;
+    outline: inherit;
+    border-radius: 50%;
+    transition: var(--transition);
+
+    &.light {
+        outline-color: var(--strong-dark);
+    }
+
+    &.dark {
+        outline-color: var(--strong-light);
+    }
+
+    &.on {
+        left: 50%;
+    }
+
+    &.off {
+        left: 0%;
+    }
+}

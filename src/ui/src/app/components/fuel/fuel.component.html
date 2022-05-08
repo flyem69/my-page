@@ -1,0 +1,87 @@
+<div class="centralized-layout">
+    <div class="fuel">
+        <div class="fuel-categories">
+            <div class="fuel-race">
+                <div style="justify-self: right; grid-area: a;">
+                    Lap time
+                </div>
+                <app-input
+                    [placeholder]="'min'"
+                    [localValidity$]="inputsData['lapTimeMin'].localValidity$"
+                    [externalValidity$]="inputsData['lapTimeMin'].externalValidity$"
+                    [value$]="inputsData['lapTimeMin'].value$"
+                    [valueRegex]="inputRegex.LIMIT_99"
+                    style="grid-area: b;"></app-input>
+                <app-input
+                    [placeholder]="'s'"
+                    [localValidity$]="inputsData['lapTimeS'].localValidity$"
+                    [externalValidity$]="inputsData['lapTimeS'].externalValidity$"
+                    [value$]="inputsData['lapTimeS'].value$"
+                    [valueRegex]="inputRegex.LIMIT_59"
+                    style="grid-area: c;"></app-input>
+                <app-input
+                    [placeholder]="'ms'"
+                    [localValidity$]="inputsData['lapTimeMS'].localValidity$"
+                    [externalValidity$]="inputsData['lapTimeMS'].externalValidity$"
+                    [value$]="inputsData['lapTimeMS'].value$"
+                    [valueRegex]="inputRegex.LIMIT_99"
+                    style="grid-area: d;"></app-input>
+                <div style="justify-self: right; grid-area: e;">
+                    Fuel per lap
+                </div>
+                <app-input
+                    [placeholder]="'l'"
+                    [localValidity$]="inputsData['fuelPerLap'].localValidity$"
+                    [externalValidity$]="inputsData['fuelPerLap'].externalValidity$"
+                    [value$]="inputsData['fuelPerLap'].value$"
+                    [valueRegex]="inputRegex.LIMIT_99_9"
+                    style="grid-area: f;"></app-input>
+                <div style="justify-self: right; grid-area: g">
+                    Race length
+                </div>
+                <app-input
+                    [placeholder]="'min'"
+                    [localValidity$]="inputsData['raceLength'].localValidity$"
+                    [externalValidity$]="inputsData['raceLength'].externalValidity$"
+                    [value$]="inputsData['raceLength'].value$"
+                    [valueRegex]="inputRegex.LIMIT_9999"
+                    style="grid-area: h;"></app-input>
+                <div
+                    [ngClass]="['button', appearance$ | async]"
+                    (click)="calcRaceFuel()"
+                    style="grid-area: i;">
+                    Calculate race fuel
+                </div>
+            </div>
+            <div class="fuel-road">
+                <div style="justify-self: right; grid-area: a;">
+                    Fuel per 100 km
+                </div>
+                <app-input
+                    [placeholder]="'l'"
+                    [localValidity$]="inputsData['fuelPer100'].localValidity$"
+                    [externalValidity$]="inputsData['fuelPer100'].externalValidity$"
+                    [value$]="inputsData['fuelPer100'].value$"
+                    [valueRegex]="inputRegex.LIMIT_99_9"
+                    style="grid-area: b;"></app-input>
+                <div style="justify-self: right; grid-area: c;">
+                    Distance
+                </div>
+                <app-input
+                    [placeholder]="'km'"
+                    [localValidity$]="inputsData['distance'].localValidity$"
+                    [externalValidity$]="inputsData['distance'].externalValidity$"
+                    [value$]="inputsData['distance'].value$"
+                    [valueRegex]="inputRegex.LIMIT_9999"
+                    style="grid-area: d;"></app-input>
+                <div
+                    [ngClass]="['button', appearance$ | async]"
+                    (click)="calcRoadFuel()"
+                    style="grid-area: e;">
+                    Calculate road fuel
+                </div>
+            </div>
+        </div>
+        <div class="fuel-result">{{result}}</div>
+    </div>
+</div>

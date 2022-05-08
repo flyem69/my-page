@@ -1,0 +1,19 @@
+<div class='stream-card'>
+	<a [routerLink]="['/streams', streamData.id]">
+		<div *ngIf="preview$ | async; then previewTemplate else iconTemplate"></div>
+	</a>
+    <ng-template #previewTemplate>
+        <video
+            #preview
+            [ngClass]="['stream-preview']"
+            (mouseleave)="leavePreview()"
+            [appAfterElementInit]="afterPreviewInit"
+            [appAfterElementInitParameter]="preview">
+        </video>
+    </ng-template>
+    <ng-template #iconTemplate>
+        <img class="stream-icon" (mouseenter)="enterPreview()" src="https://www.w3schools.com/images/lamp.jpg">
+    </ng-template>
+    <div class="stream-id">{{streamData.id}}</div>
+    <div class="stream-author">{{streamData.author}}</div>
+</div>

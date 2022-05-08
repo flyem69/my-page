@@ -1,0 +1,24 @@
+.loader {
+    border: 2px solid;
+    border-radius: 50%;
+    border-top: 2px solid;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    transition: border-color var(--transition), border-top-color var(--transition);
+
+    &.light {
+        border-color: var(--mid-light);
+        border-top-color: var(--strong-dark);
+    }
+
+    &.dark {
+        border-color: var(--mid-dark);
+        border-top-color: var(--strong-light);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

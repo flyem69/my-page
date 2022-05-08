@@ -1,0 +1,63 @@
+:root {
+    --weak-dark: rgb(64, 64, 64);
+    --mid-dark: rgb(48, 48, 48);
+    --strong-dark: rgb(32, 32, 32);
+    --weak-light: rgb(160, 160, 160);
+    --mid-light: rgb(184, 184, 184);
+    --strong-light: rgb(208, 208, 208);
+    --red: rgb(200, 0, 0);
+    --strong-dark-filter: invert(13%);
+    --strong-light-filter: invert(82%);
+    --transition: 0.2s;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.light {
+    color: var(--strong-dark);
+}
+
+.dark {
+    color: var(--strong-light);
+}
+
+.button {
+    display: inline-block;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 5px;
+    transition: var(--transition);
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.light {
+        border-color: var(--strong-light);
+
+        &:hover {
+            border-color: var(--weak-dark);
+        }
+    }
+
+    &.dark {
+        border-color: var(--strong-dark);
+
+        &:hover {
+            border-color: var(--weak-light);
+        }
+    }
+}
+
+.centralized-layout {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+}

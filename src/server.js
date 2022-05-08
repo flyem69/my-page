@@ -6,8 +6,10 @@ const fs = require('fs')
 const { Server } = require("socket.io")
 const { ExpressPeerServer } = require('peer')
 const cookieParser = require('cookie-parser')
-const tokenValidator = require('./common/services/token-validator')
+const streamsService = require('./streams/services/streams')
+const authentication = require('./authentication/middleware/authentication')
 const authRouter = require('./authentication/services/router')
+const streamsRouter = require('./streams/services/router')
 
 const expressApp = express()
 const httpServer = https.createServer({
@@ -25,7 +27,6 @@ const peerServer = ExpressPeerServer(httpServer, {
         cert: fs.readFileSync(config.root + '/ssl/certificate.pem')
     }
 })
-const streamSockets = new Set()
 
 expressApp.set('view engine', 'ejs')
 
@@ -35,37 +36,34 @@ expressApp.use(express.urlencoded({ extended: false }))
 expressApp.use(cookieParser())
 expressApp.use(peerServer)
 
-expressApp.get('/api/streams', (req, res) => {
-    res.json(Array.from(streamSockets))
-})
-
 expressApp.use(authRouter)
+expressApp.use(streamsRouter)
 
-expressApp.get('/*', tokenValidator, (_httpRequest, httpResponse) => {
+expressApp.get('/*', authentication, (_httpRequest, httpResponse) => {
     httpResponse.sendFile(config.root + '/static/react-content/index.html')
 })
 
 socketServer.on('connection', (socket) => {
     socket.on('disconnect', () => {
-        streamSockets.delete(socket.id)
+        streamsService.delete(socket.id)
     })
-    socket.on('joinStream', (streamSocket, userId) => {
-        if (socket.id !== streamSocket) {
-            socket.join(streamSocket)
+    socket.on('joinStream', (streamId, userId) => {
+        if (socket.id !== streamId) {
+            socket.join(streamId)
         }
-        socket.to(streamSocket).emit('viewerJoining', userId)
+        socket.to(streamId).emit('viewerJoining', userId)
     })
-    socket.on('leaveStream', (streamSocket, userId) => {
-        socket.to(streamSocket).emit('viewerLeaving', userId)
-        if (socket.id !== streamSocket) {
-            socket.leave(streamSocket)
+    socket.on('leaveStream', (streamId, userId) => {
+        socket.to(streamId).emit('viewerLeaving', userId)
+        if (socket.id !== streamId) {
+            socket.leave(streamId)
         }
     })
     socket.on('registerStream', () => {
-        streamSockets.add(socket.id)
+        streamsService.add(socket.id)
     })
     socket.on('deregisterStream', () => {
-        streamSockets.delete(socket.id)
+        streamsService.delete(socket.id)
     })
 })
 

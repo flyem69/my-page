@@ -1,0 +1,20 @@
+.app {
+    display: grid;
+    position: fixed;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+.app-content {
+    overflow: auto;
+    transition: var(--transition);
+
+    &.light {
+        background-color: var(--strong-light);
+    }
+
+    &.dark {
+        background-color: var(--strong-dark);
+    }
+}

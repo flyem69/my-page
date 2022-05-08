@@ -1,0 +1,3 @@
+<div [ngClass]="['switch', appearance$ | async]" (click)="toggle()">
+    <div [ngClass]="['switch-thumb', appearance$ | async, mode]"></div>
+</div>

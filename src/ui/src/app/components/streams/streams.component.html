@@ -1,0 +1,14 @@
+<div class="streams-layout">
+    <div [ngClass]="['streams-search', appearance$ | async]">
+        <app-input [width$]="inputWidth$" [placeholder]="'Search'" [value$]="searchPhrase$"></app-input>
+    </div>
+    <div class="streams">
+        <ng-container #streamCardsContainer></ng-container>
+        <ng-template #streamCardTemplate let-id="id" let-author="author">
+            <app-stream-card [streamData]="{ id: id, author: author }"></app-stream-card>
+        </ng-template>
+    </div>
+    <div [ngClass]="['streams-loader', appearance$ | async]" #loader>
+        <app-loader *ngIf="isLoading"></app-loader>
+    </div>
+</div>

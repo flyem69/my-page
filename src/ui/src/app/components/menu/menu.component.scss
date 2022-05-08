@@ -1,0 +1,39 @@
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-item {
+    flex-shrink: 0;
+    background-size: 200px 200px;
+    height: 200px;
+    width: 200px;
+    transition: var(--transition);
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &.light {
+        filter: var(--strong-dark-filter);
+    }
+
+    &.dark {
+        filter: var(--strong-light-filter);
+    }
+}
+
+.menu-fuel {
+    background-image: url(../../../assets/fuel.svg);
+}
+
+.menu-game {
+    background-image: url(../../../assets/gamepad.svg);
+}
+
+.menu-streaming {
+    background-image: url(../../../assets/streaming.svg);
+}

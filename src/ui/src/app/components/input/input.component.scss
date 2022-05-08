@@ -1,0 +1,45 @@
+.input {
+    padding: 5px;
+    outline: none;
+    border: 2px solid;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 15px;
+    transition: var(--transition);
+
+    &::-webkit-input-placeholder {
+        transition: var(--transition);
+    }
+
+    &.light {
+        &::-webkit-input-placeholder {
+            color: var(--strong-dark);
+        }
+
+        &.valid {
+            border-color: var(--weak-light);
+        }
+
+        &:focus {
+            border-color: var(--weak-dark);
+        }
+    }
+
+    &.dark {
+        &::-webkit-input-placeholder {
+            color: var(--strong-light);
+        }
+
+        &.valid {
+            border-color: var(--weak-dark);
+        }
+
+        &:focus {
+            border-color: var(--weak-light);
+        }
+    }
+
+    &.invalid {
+        border-color: var(--red) !important;
+    }
+}
