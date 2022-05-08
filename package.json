@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:backend-dev": "nodemon src/server.js",
-    "start:backend": "node src/server.js",
+    "start:backend-dev": "nodemon src/server/server.js",
+    "start:backend": "node src/server/server.js",
     "start": "cd src/ui && npm run start",
     "build": "cd src/ui && npm run build"
   },
