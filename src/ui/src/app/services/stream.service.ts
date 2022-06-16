@@ -1,6 +1,9 @@
-import * as Peer from 'peerjs';
 import { Socket, io } from 'socket.io-client';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import Peer from 'peerjs';
+import { StreamData } from 'src/app/models/stream-data';
 
 @Injectable({
 	providedIn: 'root',
@@ -10,7 +13,7 @@ export class StreamService {
 	private socket: Socket;
 	private peer: Peer;
 
-	constructor() {
+	constructor(private httpClient: HttpClient) {
 		this.socket = io({
 			port: 443,
 			path: '/socket',
@@ -33,9 +36,9 @@ export class StreamService {
 		this.socket.on('viewerLeaving', (userId) => {
 			console.log(`User ${userId} left`);
 		});
-		this.socket.emit('registerStream');
+		this.socket.emit('startStream');
 		this.stream.getVideoTracks()[0].addEventListener('ended', () => {
-			this.end();
+			this.endStream();
 		});
 	}
 
@@ -43,8 +46,12 @@ export class StreamService {
 
 	leave(streamId: string): void {}
 
-	private end(): void {
-		this.socket.emit('deregisterStream');
+	fetchAll(): Observable<StreamData[]> {
+		return this.httpClient.get<StreamData[]>('/api/streams');
+	}
+
+	private endStream(): void {
+		this.socket.emit('endStream');
 		this.socket.off('viewerJoining');
 		this.socket.off('viewerLeaving');
 		this.stream = undefined;

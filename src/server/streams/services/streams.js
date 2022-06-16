@@ -1,12 +1,14 @@
 const Stream = require('../models/stream')
 
-const streams = {}
+const streams = {
+    '123': new Stream('123', 'name', Date.now())
+}
 
 const streamsService = {
-    add(id) {
-        streams[id] = new Stream(id, Date.now())
+    add(id, author) {
+        streams[id] = new Stream(id, author, Date.now())
     },
-    get() {
+    getAll() {
         return Object.values(streams)
     },
     delete(id) {

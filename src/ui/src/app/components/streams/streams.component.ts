@@ -8,9 +8,10 @@ import {
 	ViewChild,
 	ViewContainerRef,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { DarkModeService } from 'src/app/services/dark-mode/dark-mode.service';
+import { BehaviorSubject, finalize } from 'rxjs';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 import { StreamData } from 'src/app/models/stream-data';
+import { StreamService } from 'src/app/services/stream.service';
 
 @Component({
 	selector: 'app-streams',
@@ -34,7 +35,7 @@ export class StreamsComponent implements OnInit, AfterViewInit, OnDestroy {
 	intersectionObserver: IntersectionObserver;
 	isLoading: boolean;
 
-	constructor(private darkModeService: DarkModeService) {
+	constructor(private darkModeService: DarkModeService, private streamService: StreamService) {
 		this.smallInputWidth = '300px';
 		this.standardInputWidth = '550px';
 		this.inputWidthChangeThreshold = 650;
@@ -106,18 +107,21 @@ export class StreamsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	private loadStreams(): void {
 		this.isLoading = true;
-		setTimeout(() => {
-			for (let i = 0; i < 10; i++) {
-				this.createStreamCard();
-			}
-			this.isLoading = false;
-		}, 2000);
+		this.streamService
+			.fetchAll()
+			.pipe(finalize(() => (this.isLoading = false)))
+			.subscribe((streams) => {
+				streams.forEach((stream) => {
+					this.createStreamCard(stream);
+				});
+			});
 	}
 
-	private createStreamCard(): void {
+	private createStreamCard(stream: StreamData): void {
 		const streamCard = this.streamCardTemplate.createEmbeddedView({
-			id: '12345678910',
-			author: 'author',
+			id: stream.id,
+			author: stream.author,
+			creationTime: stream.creationTime,
 		});
 		this.streamCardsContainer.insert(streamCard);
 	}

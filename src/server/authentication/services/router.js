@@ -1,5 +1,5 @@
 const express = require('express')
-const restClient = require('../services/rest')
+const restClient = require('../services/rest-client')
 const commonResponses = require('../../common/enumeration/responses')
 
 const router = express.Router()
@@ -43,7 +43,7 @@ router.post('/registration', (httpRequest, httpResponse) => {
                 message = commonResponses.SERVER_IS_NOT_RESPONDING
             }
             httpResponse.render('authentication', {
-                message: [ message ]
+                messages: [ message ]
             })
         })
 })

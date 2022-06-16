@@ -1,4 +1,4 @@
-const restClient = require('./rest')
+const restClient = require('./rest-client')
 
 const tokenValidator = (token) => {
     return restClient.verification(token)

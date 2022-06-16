@@ -12,11 +12,10 @@ const authentication = (httpRequest, httpResponse, next) => {
 			next()
 		}).catch(error => {
 			if (error.response) {
-				console.log(error.response.status)
 				httpResponse.render('authentication')
 			} else {
 				httpResponse.render('authentication', {
-					message: commonResponses.SERVER_IS_NOT_RESPONDING
+					messages: [ commonResponses.SERVER_IS_NOT_RESPONDING ]
 				})
 			}
 		})

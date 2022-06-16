@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DarkModeService } from 'src/app/services/dark-mode/dark-mode.service';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 
 @Component({
     selector: 'app-loader',

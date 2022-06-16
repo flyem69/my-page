@@ -4,8 +4,8 @@
     </div>
     <div class="streams">
         <ng-container #streamCardsContainer></ng-container>
-        <ng-template #streamCardTemplate let-id="id" let-author="author">
-            <app-stream-card [streamData]="{ id: id, author: author }"></app-stream-card>
+        <ng-template #streamCardTemplate let-id="id" let-author="author" let-creationTime="creationTime">
+            <app-stream-card [streamData]="{ id: id, author: author, creationTime: creationTime }"></app-stream-card>
         </ng-template>
     </div>
     <div [ngClass]="['streams-loader', appearance$ | async]" #loader>

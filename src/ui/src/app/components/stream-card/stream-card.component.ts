@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DarkModeService } from 'src/app/services/dark-mode/dark-mode.service';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 import { StreamData } from 'src/app/models/stream-data';
 
 @Component({
@@ -20,7 +20,6 @@ export class StreamCardComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.darkModeService.bindAppearance(this.appearance$);
-		console.log(this.streamData);
 	}
 
 	enterPreview(): void {

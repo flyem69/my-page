@@ -1,11 +1,11 @@
-import { AfterElementInitDirective } from './directives/after-element-init/after-element-init.directive';
+import { AfterElementInitDirective } from './directives/after-element-init.directive';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { ComponentsAnchorDirective } from './directives/components-anchor/components-anchor.directive';
 import { FormsModule } from '@angular/forms';
 import { FuelComponent } from './components/fuel/fuel.component';
 import { HeaderComponent } from './components/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
 import { InputComponent } from './components/input/input.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -19,7 +19,6 @@ import { SwitchComponent } from './components/switch/switch.component';
 	declarations: [
 		AfterElementInitDirective,
 		AppComponent,
-		ComponentsAnchorDirective,
 		FuelComponent,
 		HeaderComponent,
 		InputComponent,
@@ -30,7 +29,7 @@ import { SwitchComponent } from './components/switch/switch.component';
 		StreamsComponent,
 		SwitchComponent,
 	],
-	imports: [AppRoutingModule, BrowserModule, FormsModule],
+	imports: [AppRoutingModule, BrowserModule, FormsModule, HttpClientModule],
 	providers: [],
 	bootstrap: [AppComponent],
 })

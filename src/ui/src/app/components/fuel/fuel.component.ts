@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DarkModeService } from 'src/app/services/dark-mode/dark-mode.service';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 import { FuelInputData } from 'src/app/models/fuel-input-data';
 import { InputRegex } from 'src/app/enumeration/input-regex';
 import { distinctUntilChanged } from 'rxjs/operators';

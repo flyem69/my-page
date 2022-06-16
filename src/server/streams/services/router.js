@@ -1,11 +1,11 @@
 const express = require('express')
-const authentication = require('../../authentication/middleware/authentication')
+const apiAuthentication = require('../../authentication/middleware/api-authentication')
 const streamsService = require('./streams')
 
 const router = express.Router()
 
-router.get('/api/streams', authentication, (_httpRequest, httpResponse) => {
-    httpResponse.json(streamsService.get())
+router.get('/api/streams', apiAuthentication, (_httpRequest, httpResponse) => {
+    httpResponse.json(streamsService.getAll())
 })
 
 module.exports = router

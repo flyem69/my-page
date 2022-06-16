@@ -30,7 +30,7 @@ const peerServer = ExpressPeerServer(httpServer, {
 
 expressApp.set('view engine', 'ejs')
 
-expressApp.use(serveStatic(config.root + '/static/react-content', { index: false }))
+expressApp.use(serveStatic(config.root + '/static/ui', { index: false }))
 expressApp.use(express.json())
 expressApp.use(express.urlencoded({ extended: false }))
 expressApp.use(cookieParser())
@@ -40,7 +40,7 @@ expressApp.use(authRouter)
 expressApp.use(streamsRouter)
 
 expressApp.get('/*', authentication, (_httpRequest, httpResponse) => {
-    httpResponse.sendFile(config.root + '/static/react-content/index.html')
+    httpResponse.sendFile(config.root + '/static/ui/index.html')
 })
 
 socketServer.on('connection', (socket) => {
@@ -59,10 +59,10 @@ socketServer.on('connection', (socket) => {
             socket.leave(streamId)
         }
     })
-    socket.on('registerStream', () => {
-        streamsService.add(socket.id)
+    socket.on('startStream', (author) => {
+        streamsService.add(socket.id, author)
     })
-    socket.on('deregisterStream', () => {
+    socket.on('endStream', () => {
         streamsService.delete(socket.id)
     })
 })
